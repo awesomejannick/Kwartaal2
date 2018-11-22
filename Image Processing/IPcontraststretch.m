@@ -1,3 +1,4 @@
+% Maximizes the contrast of Im through linear stretching
 function Im2 = IPcontraststretch(Im)
     N = 8; %Number of bits
     Im2 = Im;
