@@ -2,7 +2,7 @@ close all;
 clear all;
          
 % Load trui image
-trui = imread('images/trui.tif');
+trui = imread('../images/trui.tif');
 
 % Stretch contrast of image
 trui_stretched = IPcontraststretch(trui);
@@ -26,3 +26,4 @@ histogram(trui);
 histogram(trui_stretched);
 title('histograms of trui and trui\_stretched');
 legend('trui', 'trui\_stretched');
+saveas(gcf, 'output/histogram.tif');
