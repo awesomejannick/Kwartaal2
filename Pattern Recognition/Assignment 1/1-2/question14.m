@@ -13,4 +13,10 @@ for i = 1:20
 end
 
 disp(hd);
-disp(['The most likely person is person ' num2str(find(hd==min(hd))) ' with hd = ' num2str(min(hd))]);
+minhd = min(hd);
+hdi = find(hd==min(hd));
+disp(['The most likely person is person ' num2str(hdi) ' with hd = ' num2str(minhd)]);
+
+[S, D] = computeSets(10000);
+sl = normcdf([minhd 1], mean(D), std(D));
+disp(sl(1));
