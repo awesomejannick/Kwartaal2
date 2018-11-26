@@ -1,11 +1,10 @@
 function out = IPgradient(image)
-    N = size(image) - [1 1];
-    out = zeros(N);
-    for i = 1:N(1)
-        for j = 1:N(2)
-            gx = image(i, j+1) - image(i, j);
-            gy = image(i+1, j) - image(i, j);
-            out(i,j) = sqrt(gx*gx + gy*gy);
-        end
-    end
+    image = double(image);
+    image = padarray(image, [1,1], 'replicate');
+    %mask = [-1,0,1;-1,0,1;-1,0,1]; %Prewitt
+    mask = [-1,0,1;-2,0,2;-1,0,1]; %Sobel
+    Gx = IPfilter(mask, image);
+    Gy = IPfilter(rot90(mask), image);
+    out = sqrt(Gx.*Gx + Gy.*Gy);
+    out = out(2:size(out,1)-1, 2:size(out,2)-1);
 end
