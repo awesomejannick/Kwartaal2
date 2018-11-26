@@ -1,0 +1,1 @@
+imread('../images/trui.tif');
