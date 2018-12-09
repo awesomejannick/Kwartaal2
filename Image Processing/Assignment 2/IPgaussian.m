@@ -7,4 +7,5 @@ function H = IPgaussian(D0, M, N)
             H(i, j) = exp((-d) / (2 * D0));
         end
     end
+    %H = H .* (sum(sum(H)) / (M*N))
 end
