@@ -1,19 +1,27 @@
+%Performs spacial filtering on image with the specified mask
 function out = IPfilter(mask, image)
-    N = size(image);
-    M = size(mask);
-    out = zeros(N);
+    [N, M] = size(mask);
+    out = zeros(size(image));
     
-    for i = 1:N(1)
-        for j = 1:N(2)
-            a = i-(M(1)+1)/2;
-            b = j-(M(2)+1)/2;
-            for k = 1:M(1)
-                for l = 1:M(2)
-                    if a+k >= 1 && a+k <= N(1) && b+l >= 1 && b+l <= N(2)
-                        out(i,j) = out(i,j) + mask(k,l) * image(a+k, b+l);
-                    end
-                end
+    for n = -floor(N/2): floor(N/2)
+        for m = -floor(M/2): floor(M/2)
+            %Use wrapping to shift image
+            copy = image;
+            if n > 0
+                copy = [copy(n+1:end, :) ; copy(1:n,:)];
             end
+            if m > 0
+                copy = [copy(:, m+1:end) copy(:, 1:m)];
+            end
+            if n < 0
+                copy = [copy(end+n+1:end, :) ; copy(1:end+n, :)];
+            end
+            if m < 0
+                copy = [copy(:, end+m+1:end) copy(:, 1:end+m)];
+            end
+            
+            %Add weighted copy to result
+            out = out + mask(n + (N+1)/2, m + (M+1)/2) * copy;
         end
     end
 end

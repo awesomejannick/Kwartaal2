@@ -1,10 +1,11 @@
 function out = DFT(im, inv)
     N = size(im);
+    disp(N);
     out = zeros(N(1), N(2));
     inv = exist('inv', 'var');
 
     for i = 0:(N(1)-1)
-        P = zeros(N(2));
+        P = zeros(N(2),1);
         for j = 0:(N(2)-1)
             for k = 0:(N(1)-1)
                 if inv
@@ -25,7 +26,5 @@ function out = DFT(im, inv)
         end
     end
     
-    if inv
-        out = out ./ (prod(N));
-    end
+    out = real(out ./ sqrt(prod(N)));
 end
