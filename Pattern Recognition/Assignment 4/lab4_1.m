@@ -26,6 +26,7 @@ ylim([0 725]);
 
 % Q5
 peaks = houghpeaks(hc, 5);
+
 figure; hold on;
 imagesc(hc);
 title('s2775832, s');

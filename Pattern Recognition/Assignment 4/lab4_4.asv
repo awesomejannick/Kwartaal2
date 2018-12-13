@@ -1,0 +1,14 @@
+close all;
+clear all;
+
+% Q1
+image = double(imread('HeadTool0002.bmp'));
+% Q2
+image = image;
+% Q3
+[centers, radii] = imfindcircles(image, [20 40], 'Sensitivity', 0.5);
+disp(size(centers)
+
+colormap('gray');
+imagesc(image);
+viscircles(centers, radii, 'EdgeColor','b');

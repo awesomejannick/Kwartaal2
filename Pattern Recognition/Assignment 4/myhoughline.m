@@ -2,7 +2,7 @@
 function myhoughline(image, r, theta)
     %3    
     [x, y] = size(image);
-    angle=pi*theta/180;
+    angle=deg2rad(theta);
     %4
     if sin(angle)==0
         line([r, r], [0, y], 'Color', 'red')

@@ -2,11 +2,11 @@
 close all;
 
 %Define settings
-Rmin = 1;
-Rmax = 5;
-Pmax = 40;
-Nmax = 40;
-epochs = 50;
+Rmin = 0.5;
+Rmax = 4;
+Pmax = 100;
+Nmax = 100;
+epochs = 150;
 its = 1000;
 
 %Initialize results
