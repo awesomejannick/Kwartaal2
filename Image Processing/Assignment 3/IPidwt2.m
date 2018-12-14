@@ -1,5 +1,17 @@
 %Computes the inverse 2D Discrete Wavelet Transform on f with the specified scale
 function f = IPidwt2(w, scale)
+    %Sanitize input
+    w = double(w);
+    if ~exist('scale', 'var')
+        scale = 1;
+    end
+    
+    %Recursively compute the inverse DWT
+    f = IPidwt2rec(w, scale);
+end
+
+%The recursive par of IPidwt2
+function f = IPidwt2rec(w, scale)
     %Basecase of the recursion
     if scale == 0 || length(w) == 1
         f = w;
@@ -7,7 +19,7 @@ function f = IPidwt2(w, scale)
     end
     
     %Split w in quarters and recursively get the inverse DWT of the topleft
-    wa = IPidwt2(w(1:end/2, 1:end/2), scale-1);
+    wa = IPidwt2rec(w(1:end/2, 1:end/2), scale-1);
     wb = w(end/2+1:end, 1:end/2);
     wc = w(1:end/2, end/2+1:end);
     wd = w(end/2+1:end, end/2+1:end);

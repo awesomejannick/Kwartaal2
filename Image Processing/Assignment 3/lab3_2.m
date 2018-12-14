@@ -1,15 +1,15 @@
+%Reset workspace
 close all;
 clear all;
 
-vase = imread('../images/blobs.tif');
+%Load input image
+vase = imread('../images/vase.tif');
 
+%Show vase and its 2-scale DWT
 figure;
-colormap('gray');
+subplot(1,2,1);
+imshow(vase);
+title('vase.tif');
+subplot(1,2,2);
 imshow(IPdwt2scale(vase,2));
-
-figure;
-colormap('gray');
-[a,b,c,d] = haart2(vase,1);
-imagesc([a,b;c,d]);
-
-disp(vase - IPidwt2(IPdwt2(vase,2),2));
+title('2-scale DWT of vase.tif')

@@ -25,6 +25,6 @@ function w = IPdwt2rec(f, scale)
     dif3 = (f(1:2:end,1:2:end) - f(2:2:end,1:2:end) - f(1:2:end,2:2:end) + f(2:2:end,2:2:end)) / 2;
     
     %Recursively transform the set of sums
-    sums = IPdwt2(sums, scale-1);
+    sums = IPdwt2rec(sums, scale-1);
     w = [sums dif1; dif2 dif3];
 end
