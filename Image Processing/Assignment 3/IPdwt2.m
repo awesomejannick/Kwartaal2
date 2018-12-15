@@ -19,12 +19,12 @@ function w = IPdwt2rec(f, scale)
     end
     
     %Compute the sums and differences of f
-    sums = (f(1:2:end,1:2:end) + f(2:2:end,1:2:end) + f(1:2:end,2:2:end) + f(2:2:end,2:2:end)) / 2;
-    dif1 = (-f(1:2:end,1:2:end) + f(2:2:end,1:2:end) - f(1:2:end,2:2:end) + f(2:2:end,2:2:end)) / 2;
-    dif2 = (-f(1:2:end,1:2:end) - f(2:2:end,1:2:end) + f(1:2:end,2:2:end) + f(2:2:end,2:2:end)) / 2;
-    dif3 = (f(1:2:end,1:2:end) - f(2:2:end,1:2:end) - f(1:2:end,2:2:end) + f(2:2:end,2:2:end)) / 2;
+    sums = f(1:2:end,1:2:end) + f(2:2:end,1:2:end) + f(1:2:end,2:2:end) + f(2:2:end,2:2:end);
+    hori = -f(1:2:end,1:2:end) + f(2:2:end,1:2:end) - f(1:2:end,2:2:end) + f(2:2:end,2:2:end);
+    vert = -f(1:2:end,1:2:end) - f(2:2:end,1:2:end) + f(1:2:end,2:2:end) + f(2:2:end,2:2:end);
+    diag = f(1:2:end,1:2:end) - f(2:2:end,1:2:end) - f(1:2:end,2:2:end) + f(2:2:end,2:2:end);
     
     %Recursively transform the set of sums
     sums = IPdwt2rec(sums, scale-1);
-    w = [sums dif1; dif2 dif3];
+    w = [sums hori; vert diag] / 2;
 end
