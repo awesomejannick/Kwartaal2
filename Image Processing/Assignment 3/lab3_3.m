@@ -15,9 +15,7 @@ for i = 1:4
     
     for j = 1:5
         subplot(3,2,j+1);
-        imshow(IPwaveletdenoise(mri, i, 50*j));
-        title(['scale: ' num2str(i) ', threshold: ' num2str(j*50)]);
+        imshow(IPwaveletdenoise(mri, i, 10*j));
+        title(['scale: ' num2str(i) ', threshold: ' num2str(j*10)]);
     end
-    
-    imshow(uint8(wdenoise(double(mri), i)));
 end
