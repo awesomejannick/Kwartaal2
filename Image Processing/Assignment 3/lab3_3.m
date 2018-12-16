@@ -11,11 +11,13 @@ for i = 1:4
     colormap('gray');
     subplot(3,2,1);
     imshow(mri);
-    title(['Original image']);
+    title('Original image');
     
+    %Use IPwaveletdenoise for various parametes and add them to the subplot
     for j = 1:5
         subplot(3,2,j+1);
-        imshow(IPwaveletdenoise(mri, i, 10*j));
-        title(['scale: ' num2str(i) ', threshold: ' num2str(j*10)]);
+        t = 10*j;
+        imshow(IPwaveletdenoise(mri, i, t));
+        title(['scale: ' num2str(i) ', threshold: ' num2str(t)]);
     end
 end
