@@ -7,7 +7,7 @@ function f = IPidwt2(w, scale)
     end
     
     %Recursively compute the inverse DWT
-    f = IPidwt2rec(w, scale);
+    f = uint8(IPidwt2rec(w, scale));
 end
 
 %The recursive par of IPidwt2

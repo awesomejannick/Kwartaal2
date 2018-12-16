@@ -8,16 +8,16 @@ mri = imread('../images/noisymri.tif');
 %Display results
 for i = 1:4
     figure;
+    colormap('gray');
     subplot(3,2,1);
-    imagesc(mri);
-    subplot(3,2,2);
-    imagesc(IPwaveletdenoise(mri, i, 50));
-    subplot(3,2,3);
-    imagesc(IPwaveletdenoise(mri, i, 100));
-    subplot(3,2,4);
-    imagesc(IPwaveletdenoise(mri, i, 150));
-    subplot(3,2,5);
-    imagesc(IPwaveletdenoise(mri, i, 200));
-    subplot(3,2,6);
-    imagesc(IPwaveletdenoise(mri, i, 250));
+    imshow(mri);
+    title(['Original image']);
+    
+    for j = 1:5
+        subplot(3,2,j+1);
+        imshow(IPwaveletdenoise(mri, i, 50*j));
+        title(['scale: ' num2str(i) ', threshold: ' num2str(j*50)]);
+    end
+    
+    imshow(uint8(wdenoise(double(mri), i)));
 end
