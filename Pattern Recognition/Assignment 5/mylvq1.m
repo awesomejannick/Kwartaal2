@@ -13,7 +13,7 @@ function [prots, error_rates] = mylvq1(mu, max_iters, num_prots, data, labels)
     error_rates = [];
     for i = 1:max_iters
         for d = 1:length(data)
-            [m, j] = min(arrayfun(@(x) dist(prots(x, :), data(d, :)), 1:length(prots)));
+            [~, j] = closest_prot(data(d, :), prots, 1:length(prots));
             if prot_labs(j) == labels(d)
                 % Closest prototype is of the same class
                 prots(j, :) = prots(j, :) + mu*(prots(j, :) - data(d));
@@ -26,15 +26,16 @@ function [prots, error_rates] = mylvq1(mu, max_iters, num_prots, data, labels)
         % Calculate error rate for current epoch
         faults = 0;
         for d = 1:length(data)
-            [m, j] = min(arrayfun(@(x) dist(prots(x, :), data(d, :)), 1:length(prots)));
-            if mod(j, 2) ~= labels(d)
+            [min_a, ~] = closest_prot(data(d, :), prots, 1:num_prots(1));
+            [min_b, ~] = closest_prot(data(d, :), prots, num_prots(1)+1:num_prots(1)+num_prots(2));
+            if (labels(d) == 1 && min_a <= min_b) || (labels(d) == 2 && min_a > min_b)
                 faults = faults + 1;
             end
         end
         
         % Abort if error rate change < 0.00001
         error_rates = [error_rates; faults / length(data)];
-        if (i>1) & (abs(error_rates(i-1) - error_rates(i)) < 0.00001)
+        if (i>1) && (abs(error_rates(i-1) - error_rates(i)) < 0.0001)
             break;
         end
     end
