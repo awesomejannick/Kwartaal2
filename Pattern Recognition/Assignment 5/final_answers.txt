@@ -1,0 +1,61 @@
+Q1
+error_rates = [];
+for i = 1:max_iters
+	relevances = [relevances; zeros(1, size(data, 2))];
+	for d = 1:length(data)
+		[~, j] = closest_relev_prot(data(d, :), prots, 1:length(prots), relevances(i, :));
+		change = mu*(prots(j, :) - data(d));
+		if prot_labs(j) == labels(d)
+			% Closest prototype is of the same class
+			relevances(i+1, :) = relevances(i, :) - change;
+			prots(j, :) = prots(j, :) - change;
+		else
+			% Closest prototype is from another class
+			relevances(i+1, :) = max(0, relevances(i, :) + change);
+			prots(j, :) = prots(j, :) + change;
+		end
+	end
+	
+	% Enforce sum(relavances) == 1
+	relevances(i+1, :) = relevances(i+1, :) / sum(relevances(i+1, :));
+	
+	% Calculate error rate for current epoch
+	faults = 0;
+	for d = 1:length(data)
+		[~, closest_num] = closest_relev_prot(data(d, :), prots, 1:length(prots), relevances(i, :));
+		if prot_labs(closest_num) ~= labels(d)
+			faults = faults + 1;
+		end
+	end
+	
+	% Abort if error rate change < 0.00001
+	error_rates = [error_rates; faults / length(data)];
+	if (i>1) && (abs(error_rates(i-1) - error_rates(i)) < 0.0001)
+		break;
+	end
+end
+
+Q2
+lab5_3_q2.png
+
+Q3
+lab5_3_q3.png
+
+Q4
+for i = 1:10
+    test  = s*(i-1)/10+1:s*i/10;
+    train = [1:s*(i-1)/10 s*i/10+1:s];
+    [prots, error] = myrlvq(0.01, 1000, [4 4], data(train,:),labels(train));
+    bar(i,error(end));
+    errors = [errors ; convertCharsToStrings([num2str(round(error(end)*100)) '%'])];
+end
+
+Q5
+Smth like:
+The average result of RLVQ is a little bit lower than the average result of LVQ﻿﻿﻿﻿﻿﻿﻿. RLVQ takes into account more variables 
+than LVQ and can therefore make a better prediction than LVQ. The prediction is not a lot better because the resulting 
+lambda or weigths were still fairly close to the initial condition, they went only 10 to 15% higher/lower than the mean 
+of 50% in our tests.
+
+Q6
+lab5_3.zip
