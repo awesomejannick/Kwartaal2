@@ -46,7 +46,7 @@ parfor N = 1:Nmax
         for i = 1:its
             wstar = randn(1, N);
             wstar = wstar * sqrt(N) / norm(wstar);
-            [w, data, labels] = minover(P, N, epochs, wstar);
+            [w, data, labels] = seqTraining(data, labels, P, N, epochs);
             generalization_errors(P) = generalization_errors(P) + generalization_error(w, wstar);
         end
     end
