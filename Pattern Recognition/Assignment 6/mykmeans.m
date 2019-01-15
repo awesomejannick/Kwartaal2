@@ -1,10 +1,20 @@
-function [history, distances, closest] = mykmeans(fv, k, tmax, kplusplus)
-    if kplusplus
-        prots = fv(randsample(1:size(fv, 1), 1), :);
+function [history, distances, closest] = mykmeans(fv, k, tmax, kpp)
+    if kpp
+        prots = zeros(k, size(fv, 2));
+        distances = zeros(size(fv, 1), 1);
+        
+        % Determine prototypes iteratively
+        prots(1, :) = fv(randsample(1:size(fv, 1), 1), :);
+        for i = 2:k
+            for j = 1:size(fv, 1)
+                [distances(j), ~] = closest_prototype(prots, fv(j, :));
+            end
+            prots(i, :) = fv(randsample(1:size(fv, 1), 1, true, distances), :);
+        end
     else
         prots = fv(randsample(1:size(fv, 1), k), :);
-        history = prots;
     end
+    history = prots;
     
     for t = 1:tmax
         % Determine closest prototypes

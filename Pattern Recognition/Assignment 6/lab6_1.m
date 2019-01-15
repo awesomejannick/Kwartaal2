@@ -12,7 +12,7 @@ hor_plots = 3;
 for n = 1:length(ks)
     k = ks(n);
     % Get results
-    [p, distances, closest_prot] = mykmeans(kmeans1, k, tmax);
+    [p, distances, closest_prot] = mykmeans(kmeans1, k, tmax, 0);
     ind = size(p, 1) - k + 1:size(p, 1);
 
     % Plot data

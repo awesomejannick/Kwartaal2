@@ -10,7 +10,7 @@ kmax = 6;
 J = zeros(1, kmax);
 for k = 1:kmax
     for i = 1:iters
-        [~, error, ~] = mykmeans(kmeans1, k, tmax);
+        [~, error, ~] = mykmeans(kmeans1, k, tmax, 0);
         J(k) = J(k) + sum(error);
     end
 end
