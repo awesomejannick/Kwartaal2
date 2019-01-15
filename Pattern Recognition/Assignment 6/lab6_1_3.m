@@ -33,4 +33,5 @@ plot(errors(:, 2), 'color', 'blue');
 legend(["K-means"; "K-means++"]);
 s1 = sprintf("Kmeans: min=%s avg=%s", num2str(min(errors(:, 1))), num2str(sum(errors(:, 1)) / size(errors(:, 1), 1)));
 s2 = sprintf("Kmeans++: min=%s avg=%s", num2str(min(errors(:, 2))), num2str(sum(errors(:, 2)) / size(errors(:, 2), 1)));
-title([s1;s2;sprintf("Welch t-test=%s", num2str(ttest2(errors(:, 1), errors(:, 2))))]);
+[~, wtt] = ttest2(errors(:, 1), errors(:, 2));
+title([s1;s2;sprintf("Welch t-test=%s", num2str(wtt))]);
