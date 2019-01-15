@@ -4,8 +4,8 @@ close all;
 %Define settings
 Rmin = 0;
 Rmax = 8;
-Pmax = 20;
-Nmax = 20;
+Pmax = 40;
+Nmax = 40;
 epochs = 150;
 its = 1000;
 
@@ -13,7 +13,7 @@ its = 1000;
 N = 2; P = 10;
 wstar = randn(1, N);
 wstar = wstar * sqrt(N) / norm(wstar);
-[w, data, labels] = minover(P, N, epochs, wstar);
+[w, data, labels] = rosenblatt(P, N, epochs, wstar);
 % Show data
 figure; hold on;
 scatter(data(labels==1, 1), data(labels==1, 2), 15, 'bo');
@@ -46,7 +46,7 @@ parfor N = 1:Nmax
         for i = 1:its
             wstar = randn(1, N);
             wstar = wstar * sqrt(N) / norm(wstar);
-            [w, data, labels] = minover(P, N, epochs, wstar);
+            [w, data, labels] = rosenblatt(P, N, epochs, wstar);
             generalization_errors(P) = generalization_errors(P) + generalization_error(w, wstar);
         end
     end
@@ -80,13 +80,13 @@ plot(plotx, ploty, 'color', 'black');
 xlim([0, Rmax]);
 xlabel("P/N");
 ylabel("Average generalization error");
-title("Generalization error of the Minover algorithm");
+title("Generalization error of the Rosenblatt algorithm");
 
 figure;hold off;
 mesh(1:Pmax, 1:Nmax, results ./ its);
 xlabel("Number of examples P");
 ylabel("Number of features N");
 zlabel("Average generalization error");
-title("Generalization error of the Minover algorithm");
+title("Generalization error of the Rosenblatt algorithm");
 xlim([0 Pmax]);
 ylim([0 Nmax]);
