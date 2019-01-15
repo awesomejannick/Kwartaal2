@@ -18,7 +18,6 @@ end
 sbrace = @(x,y)(x{y});
 fromfile = @(x)(sbrace(struct2cell(load(x)),1));
 prototypes=fromfile('clusterCentroids.mat');
-prototypes = prototypes(1:n, :);
 
 lambda0 = n/2; %initial neighborhood value
 % lambda
@@ -45,8 +44,12 @@ for i=1:epochs
     %find ranking,h,H
     
     % accumulate update
-    [~, r] = sort(arrayfun(@(i) norm(x-prototypes(i, :)), 1:size(prototypes, 1)));
-    e = exp(-r./lambda(i))';
+    [~, r] = sort(arrayfun(@(a) norm(x-prototypes(a, :)), 1:n));
+    rank = zeros(1, n);
+    for k = 1:n
+       rank(k) = find(r==k, 1, 'first');
+    end
+    e = exp(-rank./lambda(i))';
     D_prototypes = D_prototypes + (e * x);
     D_prototypes_av = D_prototypes_av + e;
   end
