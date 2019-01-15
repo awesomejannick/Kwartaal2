@@ -19,19 +19,22 @@ scatter(h1(end-k+1:end, 1), h1(end-k+1:end, 2), 25, 'rd');
 %}
 
 % Generate results
-errors = zeros(iters, 2);
-parfor i = 1:iters
-    [~, e0, ~] = mykmeans(checkerboard, k, tmax, 0);
-    [~, e1, ~] = mykmeans(checkerboard, k, tmax, 1);
-    errors(i, :) = [sum(e0), sum(e1)];
+runs = 10;
+minima = zeros(runs, 2);
+parfor r = 1:runs
+    errors = zeros(iters, 2);
+    for i = 1:iters
+        [~, e0, ~] = mykmeans(checkerboard, k, tmax, 0);
+        [~, e1, ~] = mykmeans(checkerboard, k, tmax, 1);
+        errors(i, :) = [sum(e0), sum(e1)];
+    end
+    minima(r, :) = [min(errors(:, 1)) min(errors(:, 2))];
 end
 
 % Plot results
-figure; hold on;
-plot(errors(:, 1), 'color', 'red');
-plot(errors(:, 2), 'color', 'blue');
-legend(["K-means"; "K-means++"]);
-s1 = sprintf("Kmeans: min=%s avg=%s", num2str(min(errors(:, 1))), num2str(sum(errors(:, 1)) / size(errors(:, 1), 1)));
-s2 = sprintf("Kmeans++: min=%s avg=%s", num2str(min(errors(:, 2))), num2str(sum(errors(:, 2)) / size(errors(:, 2), 1)));
-[~, wtt] = ttest2(errors(:, 1), errors(:, 2));
-title([s1;s2;sprintf("Welch t-test=%s", num2str(wtt))]);
+disp("Minima, avg, std");
+disp([min(minima(:, 1)), sum(minima(:, 1)) / size(minima(:, 1), 1) std(minima(:, 1))]);
+disp([min(minima(:, 2)), sum(minima(:, 2)) / size(minima(:, 2), 1) std(minima(:, 2))]);
+disp("Welch t-test");
+[~, wtt] = ttest2(minima(:, 1), minima(:, 2));
+disp(wtt);

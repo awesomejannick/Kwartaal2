@@ -27,7 +27,7 @@ lambda = lambda0 * (0.01/lambda0).^([0:(epochs-1)]/epochs);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Action
-
+subplotnr = 0;
 for i=1:epochs
   D_prototypes = zeros(n,dim);   % difference for vectors is initially zero
   D_prototypes_av = zeros(n,1);       % the same holds for the quotients
@@ -58,19 +58,17 @@ for i=1:epochs
   prototypes = D_prototypes ./ D_prototypes_av ;
   
   % track
-  if 1   %plot each epoch
+  if ismember(i, [20, 100, 200, 500])    %plot each epoch
     fprintf(1,'%d / %d \r',i,epochs);
     hold off
+    subplotnr = subplotnr + 1;
+    subplot(2, 2, subplotnr);
     plot(Data(:,xdim),Data(:,ydim),'bo','markersize',3)
     hold on
     plot(prototypes(:,xdim),prototypes(:,ydim),'r.','markersize',10,'linewidth',3)
     title(sprintf("Step=%s", num2str(i)));
     % write code to plot decision boundaries
-    %{
-    ... 
-    plot decision boundaries here
-    ...
-    %}
+    voronoi(prototypes(:, 1), prototypes(:, 2));
     %pause
     %or
     drawnow

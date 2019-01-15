@@ -20,16 +20,18 @@ R = J(1) * [1:kmax].^(-2/d);
 D = R./J;
 [~, k_opt] = max(D);
 
-figure;
-subplot(2, 1, 1); hold on;
+figure; hold on;
 plot(J);
 plot(R);
-title("Average quantization error")
+scatter(k_opt, J(k_opt), 20, 'bo');
+scatter(k_opt, R(k_opt), 20, 'ro');
+title(sprintf("Optimum at K=%s", num2str(k_opt)));
 xlabel("K");
-legend(["Quantization error" "Reference function"]);
-subplot(2, 1, 2); hold on;
+legend(["Quantization error J" "Reference function R"]);
+figure; hold on;
 plot(D);
 scatter(k_opt, D(k_opt), 20, 'ro');
+title(sprintf("Optimum at K=%s", num2str(k_opt)));
 xlabel("K");
 ylabel("D");
 legend(["D" "Optimum of D"]);
