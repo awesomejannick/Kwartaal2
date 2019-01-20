@@ -1,0 +1,8 @@
+function [M,R,S,U,E] = IPtexturemeasures(tex)
+    tex = double(tex(:));
+    M = mean(tex);
+    R = 1 - 1 / (1 + var(tex) / 255);
+    S = moment(tex,3,'all') / 255;
+    U = Uniformity(tex);
+    E = Entropy(tex);
+end
