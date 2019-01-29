@@ -1,0 +1,51 @@
+7-1
+Q1
+Euclidean distance
+
+Q2
+c-d-a-e-b (run code)
+
+Q4
+a-d-b-e-c
+
+7-2
+Q3
+True
+
+Q4
+False
+
+Q6
+4
+
+Q7
+False
+
+7-3
+Q1-4
+see code
+
+Q5 
+1
+
+7-4
+Q1
+z = abs((x-u) / o))
+
+Q2
+X = importdata('provinces.mat');
+X = zscore(X);
+Y = pdist(X,'Euclidean');
+D = squareform(Y);
+
+Q3
+Zeeland
+
+Q4 
+1.8954
+
+Q5
+South Holland
+
+Q6 
+4.9862
