@@ -19,3 +19,17 @@ for i = 1:5
         end
     end
 end
+
+figure; hold on;
+t = 0.18;
+scatter(cluster_data(:, 1), cluster_data(:, 2), 20, 'b.');
+title(sprintf("Connected clusters with T=%.2f", t));
+for a = 1:size(cluster_data, 1)
+    for b = a:size(cluster_data, 1)
+        x = cluster_data(a, :);
+        y = cluster_data(b, :);
+        if dist(x, y, k) < t
+            plot([x(1) y(1)], [x(2) y(2)], 'color', 'black');
+        end
+    end
+end
